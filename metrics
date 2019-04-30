@@ -1,0 +1,38 @@
+#!/usr/local/bin/python
+
+import click
+import psutil
+
+@click.group()
+def main():
+    pass
+
+@main.command(short_help="Prints CPU metrics")
+@click.argument('cpu', nargs=-1, required=False)
+def cpu(cpu):
+   cpu = psutil.cpu_times()
+   templ = "%-5s %4s"
+   print (templ % ('system.cpu.idle:', int(cpu.idle)))
+   print (templ % ('system.cpu.user:', int(cpu.user)))
+   print (templ % ('system.cpu.guest:', int(cpu.guest)))
+   print (templ % ('system.cpu.iowait:', int(cpu.iowait)))
+   print (templ % ('system.cpu.steal:', int(cpu.steal)))
+   print (templ % ('system.cpu.system:', int(cpu.system)))
+
+@main.command(short_help="Prints RAM metrics")
+@click.argument('mem', nargs=-1, required=False)
+def mem(mem):
+    virt = psutil.virtual_memory()
+    swap = psutil.swap_memory()
+    templ = "%-5s %12s"
+    #print(templ % ('', 'total', 'used', 'free', 'shared', 'buffers', 'cache'))
+    print(templ % ('virtual total:', int(virt.total)))
+    print(templ % ('virtual used:', int(virt.used)))
+    print(templ % ('virtual free:', int(virt.free)))
+    print(templ % ('virtual.shared:', int(getattr(virt, 'shared'))))
+    print(templ % ('swap total:', int(swap.total)))
+    print(templ % ('swap used:', int(swap.used)))
+    print(templ % ('swap free:', int(swap.free)))
+
+if __name__ == "__main__":
+    main()
