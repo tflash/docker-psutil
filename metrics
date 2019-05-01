@@ -25,7 +25,6 @@ def mem(mem):
     virt = psutil.virtual_memory()
     swap = psutil.swap_memory()
     templ = "%-5s %12s"
-    #print(templ % ('', 'total', 'used', 'free', 'shared', 'buffers', 'cache'))
     print(templ % ('virtual total:', int(virt.total)))
     print(templ % ('virtual used:', int(virt.used)))
     print(templ % ('virtual free:', int(virt.free)))
